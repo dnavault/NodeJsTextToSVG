@@ -2,18 +2,32 @@
   
   const express = require('express');
   const app = express();
+  const svg64 = require('svg64'); 
 
+  const TextToSVG = require('text-to-svg');
+  const textToSVG = TextToSVG.loadSync();
+  const attributes = {fill:'red', stroke: 'black'};
+  const options = {x:0, y:0, fontSize: 72, anchor:'top',attributes: attributes};
+  let svg = "";
+  //console.log(svg);
 
   // respond with "hello world" when a GET request is made to the homepage
   app.get('/textToSVG', function (req, res) {
-    const TextToSVG = require('text-to-svg');
-    const textToSVG = TextToSVG.loadSync();
-    const attributes = {fill:'red', stroke: 'black'};
-    const options = {x:0, y:0, fontSize: 72, anchor:'top',attributes: attributes};
-    const svg = textToSVG.getSVG('hesssssssdllo', options);
-    //console.log(svg);
-     res.setHeader('Content-Type', 'image/svg+xml');
+   
+    if(req.query.name)
+    {
+      svg = textToSVG.getSVG(req.query.name, options);
+      res.setHeader('Content-Type', 'text/plain');
+      //res.setHeader('Content-Type', 'text/html');
+      console.log(svg64(svg));
       res.write(svg);
+      res.end();
+    }
+  });
+
+  app.get('/', function(req, res){
+    res.setHeader('Content-Type', 'text/html')  
+    res.write("<img src='data:image/svg+xml;utf8,https://5i0t5.sse.codesandbox.io/textToSVG?name=test'/>");
       res.end();
   });
     
