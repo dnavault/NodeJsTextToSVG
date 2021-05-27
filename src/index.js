@@ -1,22 +1,23 @@
-  const http = require("http");
-   
+  
+  
+  const express = require('express');
+  const app = express();
 
-  http
-    .createServer(function(req, res) {
-      const TextToSVG = require('text-to-svg');
-  const textToSVG = TextToSVG.loadSync();
 
-  const attributes = {fill:'red', stroke: 'black'};
-  const options = {x:0, y:0, fontSize: 72, anchor:'top',attributes: attributes};
-  const svg = textToSVG.getSVG('hello', options);
-  //console.log(svg);
-
-      
-      
+  // respond with "hello world" when a GET request is made to the homepage
+  app.get('/textToSVG', function (req, res) {
+    const TextToSVG = require('text-to-svg');
+    const textToSVG = TextToSVG.loadSync();
+    const attributes = {fill:'red', stroke: 'black'};
+    const options = {x:0, y:0, fontSize: 72, anchor:'top',attributes: attributes};
+    const svg = textToSVG.getSVG('hesssssssdllo', options);
+    //console.log(svg);
+     res.setHeader('Content-Type', 'image/svg+xml');
       res.write(svg);
       res.end();
-    })
-    .listen(8080);
+  });
+    
+    app.listen(8080);
 
     /**
      * Exercise:
