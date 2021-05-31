@@ -1,10 +1,42 @@
-  
-  
-  const express = require('express');
+  const express = require("express");
+  const router = express.Router();
   const app = express();
+  const connect = require('connect');
   const svg64 = require('svg64'); 
+  const vhost = require('vhost');
+ 
+  //const userApp = connect();
+  //const emailApp = connect();
+  
+  app.use(vhost('chatter.tedxgramercy.com', require('./chatter/app').app))
+  app.use(router);
 
-  const TextToSVG = require('text-to-svg');
+  app.get('/', function(req, res){
+      res.send("Hello from the root application URL");
+  });
+  
+  //app.get('/myapp/test/', function(req, res){
+   //   res.send("MyApp 'test' URL");
+  //});
+  
+ // app.listen(0, () => console.log('Application is running'));
+
+  // Email app route
+  //router.get('/', function(req,res) {
+    //  res.send('Email app');
+ // });
+
+  
+
+  //server.use(vhost('email.local', emailApp));
+  //server.use(vhost('*.user.local',userApp));
+
+  //console.log(vhost);
+  
+
+  app.listen(3000);
+
+  /*const TextToSVG = require('text-to-svg');
   const textToSVG = TextToSVG.loadSync();
   const attributes = {fill:'red', stroke: 'black'};
   const options = {x:0, y:0, fontSize: 72, anchor:'top',attributes: attributes};
@@ -30,8 +62,12 @@
     res.write("<img src='data:image/svg+xml;utf8,https://5i0t5.sse.codesandbox.io/textToSVG?name=test'/>");
       res.end();
   });
+    */
+
+  // app.get('/textToSVG', function (req, res) {
+   
+
     
-    app.listen(8080);
 
     /**
      * Exercise:
